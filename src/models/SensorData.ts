@@ -4,7 +4,7 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 interface SensorData {
     dataId: number;
-    timestamp: Date; // colocar em unix
+    timestamp: Date;
     value: DoubleRange;
     unitId: Number;
 }

@@ -8,8 +8,7 @@ interface DataStream {
     enabled: boolean;
     deviceId: Number;
     unitId: Number;
-    // remover/repensar
-    measurementCount: Number; //////////////////////////////
+    measurementCount: Number;
     measurements: [mongoose.Schema.Types.ObjectId];
 }
 
