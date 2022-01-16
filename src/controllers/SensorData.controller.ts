@@ -5,10 +5,26 @@ import DataStream from '../models/DataStream';
 export async function storeSensorData (req: Request, res: Response) {
     let streamId = req.params.id;
 
+    let { timestamp, value } = req.body;
+
+    if (!Number.isInteger(timestamp)) {
+        return res.status(400).json("Envie um timestamp no próximo request");
+    }
+
+    if (isNaN(value) || value === '') {
+        return res.status(400).json("Envie uma medição no próximo request");
+    }
+
     DataStream.findOne({ streamId: streamId }, function (err: any, stream: any) {
         if (err) {
             console.log(err);
+            return res.status(500).json("Falha interna do servidor");
         } else {
+
+            if (!stream) {
+                return res.status(400).json(`Stream de id ${streamId} não encontrado`);
+            }
+
             let newData = {
                 timestamp: req.body.timestamp,
                 value: req.body.value,
@@ -18,6 +34,7 @@ export async function storeSensorData (req: Request, res: Response) {
             SensorData.create(newData, function (err: any, data: any) {
                 if (err) {
                     console.log(err);
+                    return res.status(500).json("Falha interna do servidor");
                 } else {
                     data.save();
                     stream.measurements.push(data);
@@ -26,7 +43,7 @@ export async function storeSensorData (req: Request, res: Response) {
 
                     let response = {
                         id: data.dataId,
-                        timestamp: Date.parse(data.timestamp),
+                        timestamp: data.timestamp.getTime(),
                         value: data.value,
                         unitId: data.unitId
                     }

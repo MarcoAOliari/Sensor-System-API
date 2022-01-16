@@ -53,8 +53,8 @@ export async function storeDataStream (req: Request, res: Response) {
         return res.status(400).json("Envie um label no próximo request");
     }
 
-    if (!unitId) {
-        return res.status(400).json("Envie um unitId no próximo request");
+    if (!Number.isInteger(unitId)) {
+        return res.status(400).json("Envie um unitId válido no próximo request");
     }
 
     let newStream = {
