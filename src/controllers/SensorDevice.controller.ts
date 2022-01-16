@@ -4,7 +4,6 @@ import SensorDevice from '../models/SensorDevice';
 import DataStream from '../models/DataStream';
 import SensorData from '../models/SensorData';
 
-// timestamp perdendo precisão!!!
 export async function getSensorDevice (req: Request, res: Response) {
     const { id } = req.params;
 
@@ -15,15 +14,22 @@ export async function getSensorDevice (req: Request, res: Response) {
             path: 'measurements',
             model: SensorData,
             options: {
+                limit: 5,
                 sort: { dataId: -1 }
             }
         }
-    }).exec(function (err: any, doc: any) {
+    }).exec(function (err: any, sensor: any) {
         if (err) {
             console.log(err);
+            return res.status(500).json("Falha interna do servidor");
         } else {
-            let response = doc.streams.map((stream: any) => {
-                let values = stream.measurements.slice(0, 5).map((data: any) => {
+
+            if (!sensor) {
+                return res.status(204).json();
+            }
+
+            let streams = sensor.streams.map((stream: any) => {
+                let values = stream.measurements.map((data: any) => {
                     return {
                         timestamp: data.timestamp.getTime(),
                         value: data.value
@@ -36,39 +42,56 @@ export async function getSensorDevice (req: Request, res: Response) {
                     label: stream.label,
                     unitId: stream.unitId,
                     deviceId: stream.deviceId,
-                    measurementCount: stream.measurements.length,
-                    measurements: values.slice(0, 5)
+                    measurementCount: stream.measurementCount,
+                    measurements: values
                 }
             });
 
-            let sensor = {
-                id: doc.sensorId,
-                key: doc._id,
-                label: doc.label,
-                description: doc.description,
-                streams: response
+            let response = {
+                id: sensor.sensorId,
+                key: sensor._id,
+                label: sensor.label,
+                description: sensor.description,
+                streams: streams
             }
 
-            return res.status(200).json(sensor);
+            return res.status(200).json(response);
         }
     });
 };
 
 export async function storeSensorDevice(req: Request, res: Response) {
-    let newSensor = {
-        label: req.body.label,
-        description: req.body.description
+    let userId = req.params.id;
+
+    let { label, description } = req.body;
+
+    if (!label) {
+        return res.status(400).json("Envie um label no próximo request");
     }
 
-    let userId = req.params.id;
+    if (!description) {
+        return res.status(400).json("Envie uma description no próximo request");
+    }
+
+    let newSensor = {
+        label: label,
+        description: description
+    }
 
     User.findById(userId, function (err: any, user: any) {
         if (err) {
             console.log(err);
+            return res.status(500).json("Falha interna do servidor");
         } else {
+
+            if (!user) {
+                return res.status(400).json(`Usuário de id ${userId} não encontrado`);
+            }
+
             SensorDevice.create(newSensor, function (err, sensor) {
                 if (err) {
                     console.log(err);
+                    return res.status(500).json("Falha interna do servidor");
                 } else {
                     sensor.save();
                     user.sensors.push(sensor);
