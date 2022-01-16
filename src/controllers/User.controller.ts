@@ -3,7 +3,6 @@ import User from '../models/User';
 import SensorDevice from '../models/SensorDevice';
 import DataStream from '../models/DataStream';
 
-
 export async function getSensorsFromUser (req: Request, res: Response) {
     const { id } = req.params;
 
@@ -14,11 +13,17 @@ export async function getSensorsFromUser (req: Request, res: Response) {
             path: 'streams',
             model: DataStream
         }
-    }).exec(function (err: any, doc: any) {
+    }).exec(function (err: any, user: any) {
         if (err) {
             console.log(err);
+            return res.status(500).json("Falha interna do servidor");
         } else {
-            let response = doc.sensors.map((sensor: any) => {
+
+            if (!user) {
+                return res.status(400).json(`Usuário de id ${id} não encontrado`);
+            }
+
+            let response = user.sensors.map((sensor: any) => {
                 let streamsData = sensor.streams.map((stream: any) => {
                     return {
                         id: stream.streamId,
@@ -26,7 +31,7 @@ export async function getSensorsFromUser (req: Request, res: Response) {
                         label: stream.label,
                         unitId: stream.unitId,
                         deviceId: stream.deviceId,
-                        measurementCount: stream.measurements.length
+                        measurementCount: stream.measurementCount
                     }
                 })
 
@@ -38,6 +43,7 @@ export async function getSensorsFromUser (req: Request, res: Response) {
                     streams: streamsData
                 }
             })
+
             return res.status(200).json(response);
         }
     })
