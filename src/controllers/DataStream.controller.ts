@@ -10,36 +10,52 @@ export async function getDataStream (req: Request, res: Response) {
         path: 'measurements',
         model: SensorData,
         options: {
+            limit: 5,
             sort: { dataId: -1 }
         }
-    }).exec(function (err: any, doc: any) {
+    }).exec(function (err: any, stream: any) {
         if (err) {
             console.log(err);
+            return res.status(500).json("Falha interna do servidor");
         } else {
-            let values = doc.measurements.map((data: any) => {
+
+            if (!stream) {
+                return res.status(204).json();
+            }
+
+            let values = stream.measurements.map((data: any) => {
                 return {
-                    timestamp: Date.parse(data.timestamp),
+                    timestamp: data.timestamp.getTime(),
                     value: data.value
                 }
             });
 
-            let stream = {
-                id: doc.streamId,
-                key: doc._id,
-                label: doc.label,
-                unitId: doc.unitId,
-                deviceId: doc.deviceId,
-                measurementCount: doc.measurements.length,
+            let response = {
+                id: stream.streamId,
+                key: stream._id,
+                label: stream.label,
+                unitId: stream.unitId,
+                deviceId: stream.deviceId,
+                measurementCount: stream.measurementCount,
                 measurements: values
             }
 
-            return res.status(200).json(stream)
+            return res.status(200).json(response);
         }
     })
 };
 
 export async function storeDataStream (req: Request, res: Response) {
     let sensorId = req.params.id;
+    let { label, unitId } = req.body;
+
+    if (!label) {
+        return res.status(400).json("Envie um label no próximo request");
+    }
+
+    if (!unitId) {
+        return res.status(400).json("Envie um unitId no próximo request");
+    }
 
     let newStream = {
         label: req.body.label,
@@ -50,10 +66,16 @@ export async function storeDataStream (req: Request, res: Response) {
     SensorDevice.findOne({ sensorId: sensorId }, function (err: any, sensor: any) {
         if (err) {
             console.log(err);
+            return res.status(500).json("Falha interna do servidor");
         } else {
+            if (!sensor) {
+                return res.status(400).json(`Sensor de id ${sensorId} não encontrado`);
+            }
+
             DataStream.create(newStream, function (err, stream) {
                 if (err) {
                     console.log(err);
+                    return res.status(500).json("Falha interna do servidor");
                 } else {
                     stream.save();
                     sensor.streams.push(stream);

@@ -7,8 +7,8 @@ import MeasurementUnitRoutes from './routes/MeasurementUnit';
 import UserRoutes from './routes/User';
 import SensorDeviceRoutes from './routes/SensorDevice';
 import DataStreamRoutes from './routes/DataStream';
+import SensorDataRoutes from './routes/SensorData';
 import PopulateRoutes from './routes/Populate';
-//handlebars
 
 class Application {
 
@@ -38,7 +38,8 @@ class Application {
         this.app.use(UserRoutes);
         this.app.use(SensorDeviceRoutes);
         this.app.use(DataStreamRoutes);
-        //this.app.use(PopulateRoutes);
+        this.app.use(SensorDataRoutes);
+        this.app.use(PopulateRoutes);
     }
 
     start() {

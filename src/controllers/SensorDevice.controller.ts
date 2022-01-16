@@ -25,7 +25,7 @@ export async function getSensorDevice (req: Request, res: Response) {
             let response = doc.streams.map((stream: any) => {
                 let values = stream.measurements.slice(0, 5).map((data: any) => {
                     return {
-                        timestamp: Date.parse(data.timestamp),
+                        timestamp: data.timestamp.getTime(),
                         value: data.value
                     };
                 })
