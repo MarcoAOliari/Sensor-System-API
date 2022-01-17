@@ -2,3 +2,5 @@
 /dist
 /node_modules
 /todo
+/src/test.ts
+/src/routes/Populate.ts
