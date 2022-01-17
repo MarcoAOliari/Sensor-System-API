@@ -1,14 +1,10 @@
 import mongoose, { Schema, model } from 'mongoose';
 
+import { IMeasurementUnit } from './interfaces';
+
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-interface MeasurementUnit {
-    id: number;
-    symbol: string;
-    description: string;
-}
-
-const MeasurementUnitSchema = new Schema<MeasurementUnit> ({
+const MeasurementUnitSchema = new Schema<IMeasurementUnit> ({
     symbol: {
         type: String,
         required: true

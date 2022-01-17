@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
+
 import DataStream from '../models/DataStream';
 import SensorData from '../models/SensorData';
 import SensorDevice from '../models/SensorDevice';
+
+import { IDataStream, ISensorData, ISensorDevice } from '../models/interfaces';
 
 export async function getDataStream (req: Request, res: Response) {
     const { id } = req.params;

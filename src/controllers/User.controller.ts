@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import User from '../models/User';
 import SensorDevice from '../models/SensorDevice';
 import DataStream from '../models/DataStream';

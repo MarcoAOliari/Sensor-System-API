@@ -1,15 +1,10 @@
 import mongoose, { Schema, model, SchemaTypes } from 'mongoose';
 
+import { ISensorData } from './interfaces';
+
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-interface SensorData {
-    dataId: number;
-    timestamp: Date;
-    value: DoubleRange;
-    unitId: Number;
-}
-
-const SensorDataSchema = new Schema<SensorData> ({
+const SensorDataSchema = new Schema<ISensorData> ({
     timestamp: {
         type: Date,
         required: true

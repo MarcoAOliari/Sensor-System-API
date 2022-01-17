@@ -1,15 +1,10 @@
 import mongoose, { Schema, model } from 'mongoose';
 
+import { ISensorDevice } from './interfaces';
+
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-interface SensorDevice {
-    sensorId: number;
-    label: string;
-    description: string;
-    streams: [mongoose.Schema.Types.ObjectId];
-}
-
-const SensorDeviceSchema = new Schema<SensorDevice> ({
+const SensorDeviceSchema = new Schema<ISensorDevice> ({
     sensorId: Number,
     label: {
         type: String,

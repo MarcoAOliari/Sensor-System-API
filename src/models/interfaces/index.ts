@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
-export interface User {
-    _id: number;
+export interface IUser {
+    _id: Number;
     username: string;
     email: string;
     sensors: [mongoose.Schema.Types.ObjectId];
 }
 
-export interface DataStream {
+export interface IDataStream extends mongoose.Document {
     streamId: number;
     label: string;
     enabled: boolean;
@@ -17,20 +17,20 @@ export interface DataStream {
     measurements: [mongoose.Schema.Types.ObjectId];
 }
 
-export interface MeasurementUnit {
+export interface IMeasurementUnit extends mongoose.Document {
     id: number;
     symbol: string;
     description: string;
 }
 
-export interface SensorData {
+export interface ISensorData extends mongoose.Document {
     dataId: number;
     timestamp: Date;
     value: DoubleRange;
     unitId: Number;
 }
 
-export interface SensorDevice {
+export interface ISensorDevice extends mongoose.Document {
     sensorId: number;
     label: string;
     description: string;

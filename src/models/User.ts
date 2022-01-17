@@ -1,15 +1,10 @@
 import mongoose, { Schema, model } from 'mongoose';
 
+import { IUser } from './interfaces';
+
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-interface User {
-    _id: number;
-    username: string;
-    email: string;
-    sensors: [mongoose.Schema.Types.ObjectId];
-}
-
-const UserSchema = new Schema<User> ({
+const UserSchema = new Schema<IUser> ({
     _id: Number,
     username: {
         type: String,

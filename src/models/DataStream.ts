@@ -1,18 +1,10 @@
 import mongoose, { Schema, model } from 'mongoose';
 
+import { IDataStream } from './interfaces';
+
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-interface DataStream {
-    streamId: number;
-    label: string;
-    enabled: boolean;
-    deviceId: Number;
-    unitId: Number;
-    measurementCount: Number;
-    measurements: [mongoose.Schema.Types.ObjectId];
-}
-
-const DataStreamSchema = new Schema<DataStream> ({
+const DataStreamSchema = new Schema<IDataStream> ({
     label: {
         type: String,
         required: true
