@@ -1,14 +1,11 @@
 import express from 'express';
-import morgan from 'morgan';
 import seedDB from './seeds';
-import testData from './test';
 
 import MeasurementUnitRoutes from './routes/MeasurementUnit';
 import UserRoutes from './routes/User';
 import SensorDeviceRoutes from './routes/SensorDevice';
 import DataStreamRoutes from './routes/DataStream';
 import SensorDataRoutes from './routes/SensorData';
-import PopulateRoutes from './routes/Populate';
 
 class Application {
 
@@ -23,12 +20,11 @@ class Application {
 
     settings() {
         this.app.set('port', 3000);
-        //seedDB();
-        //testData();
+        // Adiciona as unidades de medida no banco de dados
+        seedDB();
     }
 
     middlewares() {
-        // this.app.use(morgan('dev'));
         // Configurações dos middlewares
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(express.json());
@@ -41,7 +37,6 @@ class Application {
         this.app.use(SensorDeviceRoutes);
         this.app.use(DataStreamRoutes);
         this.app.use(SensorDataRoutes);
-        //this.app.use(PopulateRoutes);
     }
 
     start() {
