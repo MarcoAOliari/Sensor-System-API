@@ -2,7 +2,7 @@
 
 API desenvolvida com TypeScript, utilizando Node.js e o banco de dados não relacional MongoDB.
 
-A documentação da API com os seus endpoints pode ser conferida em https://app.swaggerhub.com/apis/marco.oliari/SenseUp/1.0
+A documentação da API com os seus endpoints pode ser conferida em https://app.swaggerhub.com/apis-docs/marco.oliari/SenseUp/1.0
 
 # Variáveis de Ambiente
 - DATABASE_NAME: nome da base de dados a ser criada no MongoDB
