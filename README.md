@@ -26,7 +26,7 @@ cd Sensor-System-API
 npm install
 ```
 
-- Build e execute o projeto
+- Compile e execute o projeto
 ```
 npm run build
 npm start
@@ -37,7 +37,7 @@ A API estará online em http://localhost:3000
 # Estrutura do Projeto
 | Nome | Descrição |
 | ------------------------- | ----------------------------------------------------------------------- |
-| **dist**                  | Saída do build do Typescript |                                
+| **dist**                  | Saída da compilação do Typescript |                                
 | **node_modules**          | Dependências utilizadas no desenvolvimento |
 | **src**                   | Código fonte que é compilado para as pasta dist |
 | **src/models**            | Schemas utilizados para armazenar e retornar dados do banco de dados |
@@ -50,7 +50,7 @@ A API estará online em http://localhost:3000
 | **package.json**          | Dependências do npm e scripts |
 
 # Desenvolvimento
-A API foi projetada seguindo da maneira mais fiel possível às especificações fornecidas. Para a comunicação com o banco de dados MongoDB foi utilizado o ODM mongoose. A porta e o nome do banco de dados são variáveis de ambiente, configuradas com o dotenv e recebidas de um arquivo .env.
+A API foi projetada seguindo as especificações fornecidas. Para a comunicação com o banco de dados MongoDB foi utilizado o ODM mongoose. A porta e o nome do banco de dados são variáveis de ambiente, configuradas com o dotenv e recebidas de um arquivo .env.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/50597816/149846002-81273667-e728-4d89-826b-0b600beaa6c6.png">
