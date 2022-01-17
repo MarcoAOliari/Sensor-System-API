@@ -6,7 +6,7 @@ import SensorDevice from '../models/SensorDevice';
 
 import { IDataStream, ISensorData, ISensorDevice } from '../models/interfaces';
 
-// Retorna uma Stream com suas 5 últimas medidas
+// Retorna uma Stream com todas as suas medidas
 export async function getDataStream (req: Request, res: Response) {
     const { id } = req.params;
 
@@ -15,8 +15,6 @@ export async function getDataStream (req: Request, res: Response) {
         path: 'measurements',
         model: SensorData,
         options: {
-            // rever
-            limit: 5,
             sort: { dataId: -1 }
         }
     }).exec(function (err: any, stream: IDataStream) {
