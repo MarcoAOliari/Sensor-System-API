@@ -13,8 +13,8 @@ export interface IDataStream extends mongoose.Document {
     enabled: boolean;
     deviceId: Number;
     unitId: Number;
-    measurementCount: Number;
-    measurements: [mongoose.Schema.Types.ObjectId];
+    measurementCount: number;
+    measurements: Types.DocumentArray<ISensorData>;
 }
 
 export interface IMeasurementUnit extends mongoose.Document {

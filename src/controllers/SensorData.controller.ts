@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
+
 import SensorData from '../models/SensorData';
 import DataStream from '../models/DataStream';
+
+import { IDataStream, ISensorData } from '../models/interfaces';
 
 export async function storeSensorData (req: Request, res: Response) {
     let streamId = req.params.id;
@@ -15,7 +18,7 @@ export async function storeSensorData (req: Request, res: Response) {
         return res.status(400).json("Envie uma medição no próximo request");
     }
 
-    DataStream.findOne({ streamId: streamId }, function (err: any, stream: any) {
+    DataStream.findOne({ streamId: streamId }, function (err: any, stream: IDataStream) {
         if (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
@@ -31,7 +34,7 @@ export async function storeSensorData (req: Request, res: Response) {
                 unitId: stream.unitId
             }
 
-            SensorData.create(newData, function (err: any, data: any) {
+            SensorData.create(newData, function (err: any, data: ISensorData) {
                 if (err) {
                     console.log(err);
                     return res.status(500).json("Falha interna do servidor");
