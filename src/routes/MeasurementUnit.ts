@@ -3,6 +3,6 @@ import { getMeasurementUnits } from '../controllers/MeasurementUnit.controller';
 
 const router = Router();
 
-router.get('/measurementunit', getMeasurementUnits);
+router.get('/measurementunits', getMeasurementUnits);
 
 export default router;

@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
+
 import MeasurementUnit from '../models/MeasurementUnit';
 
+import { IMeasurementUnit } from '../models/interfaces';
+
 export async function getMeasurementUnits (req: Request, res: Response) {
-    MeasurementUnit.find({}, function(err, allUnits) {
+    MeasurementUnit.find({}, function(err: any, allUnits: [IMeasurementUnit]) {
         if (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
