@@ -16,7 +16,7 @@ export async function getDataStream (req: Request, res: Response) {
             limit: 5,
             sort: { dataId: -1 }
         }
-    }).exec(function (err: any, stream: any) {
+    }).exec(function (err: any, stream: IDataStream) {
         if (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
@@ -66,7 +66,7 @@ export async function storeDataStream (req: Request, res: Response) {
         unitId: req.body.unitId
     }
 
-    SensorDevice.findOne({ sensorId: sensorId }, function (err: any, sensor: any) {
+    SensorDevice.findOne({ sensorId: sensorId }, function (err: any, sensor: ISensorDevice) {
         if (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
@@ -75,7 +75,7 @@ export async function storeDataStream (req: Request, res: Response) {
                 return res.status(400).json(`Sensor de id ${sensorId} não encontrado`);
             }
 
-            DataStream.create(newStream, function (err, stream) {
+            DataStream.create(newStream, function (err: any, stream: IDataStream) {
                 if (err) {
                     console.log(err);
                     return res.status(500).json("Falha interna do servidor");

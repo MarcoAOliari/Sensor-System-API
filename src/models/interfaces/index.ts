@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 export interface IUser {
     _id: Number;
@@ -34,6 +34,7 @@ export interface ISensorDevice extends mongoose.Document {
     sensorId: number;
     label: string;
     description: string;
-    streams: [mongoose.Schema.Types.ObjectId];
+    //streams: [mongoose.Schema.Types.ObjectId];
+    streams: Types.DocumentArray<IDataStream>;
 }
 
