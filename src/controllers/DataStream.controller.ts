@@ -26,7 +26,7 @@ export async function getDataStream (req: Request, res: Response) {
                 return res.status(204).json();
             }
 
-            let values = stream.measurements.map((data: any) => {
+            let values = stream.measurements.map((data: ISensorData) => {
                 return {
                     timestamp: data.timestamp.getTime(),
                     value: data.value

@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
+
 import User from '../models/User';
 import SensorDevice from '../models/SensorDevice';
 import DataStream from '../models/DataStream';
 import SensorData from '../models/SensorData';
+
+import { IDataStream, ISensorData, ISensorDevice, IUser } from '../models/interfaces';
 
 export async function getSensorDevice (req: Request, res: Response) {
     const { id } = req.params;
@@ -18,7 +21,7 @@ export async function getSensorDevice (req: Request, res: Response) {
                 sort: { dataId: -1 }
             }
         }
-    }).exec(function (err: any, sensor: any) {
+    }).exec(function (err: any, sensor: ISensorDevice) {
         if (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
@@ -28,8 +31,8 @@ export async function getSensorDevice (req: Request, res: Response) {
                 return res.status(204).json();
             }
 
-            let streams = sensor.streams.map((stream: any) => {
-                let values = stream.measurements.map((data: any) => {
+            let streams = sensor.streams.map((stream: IDataStream) => {
+                let values = stream.measurements.map((data: ISensorData) => {
                     return {
                         timestamp: data.timestamp.getTime(),
                         value: data.value
@@ -78,7 +81,7 @@ export async function storeSensorDevice(req: Request, res: Response) {
         description: description
     }
 
-    User.findById(userId, function (err: any, user: any) {
+    User.findById(userId, function (err: any, user: IUser) {
         if (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
@@ -88,7 +91,7 @@ export async function storeSensorDevice(req: Request, res: Response) {
                 return res.status(400).json(`Usuário de id ${userId} não encontrado`);
             }
 
-            SensorDevice.create(newSensor, function (err, sensor) {
+            SensorDevice.create(newSensor, function (err: any, sensor: ISensorDevice) {
                 if (err) {
                     console.log(err);
                     return res.status(500).json("Falha interna do servidor");

@@ -1,10 +1,10 @@
 import mongoose, { Types } from 'mongoose';
 
-export interface IUser {
+export interface IUser extends mongoose.Document {
     _id: Number;
     username: string;
     email: string;
-    sensors: [mongoose.Schema.Types.ObjectId];
+    sensors: Types.DocumentArray<ISensorDevice>;
 }
 
 export interface IDataStream extends mongoose.Document {
