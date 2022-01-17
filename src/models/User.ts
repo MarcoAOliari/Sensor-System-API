@@ -4,6 +4,8 @@ import { IUser } from './interfaces';
 
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
+// Model User do diagrama de classes
+
 const UserSchema = new Schema<IUser> ({
     _id: Number,
     username: {

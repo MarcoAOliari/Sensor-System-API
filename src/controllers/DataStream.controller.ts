@@ -6,13 +6,16 @@ import SensorDevice from '../models/SensorDevice';
 
 import { IDataStream, ISensorData, ISensorDevice } from '../models/interfaces';
 
+// Retorna uma Stream com suas 5 últimas medidas
 export async function getDataStream (req: Request, res: Response) {
     const { id } = req.params;
 
+    // Popula as medidas de uma Stream, recebendo apenas as 5 últimas registradas
     await DataStream.findOne({streamId: id}).populate({
         path: 'measurements',
         model: SensorData,
         options: {
+            // rever
             limit: 5,
             sort: { dataId: -1 }
         }
@@ -26,6 +29,7 @@ export async function getDataStream (req: Request, res: Response) {
                 return res.status(204).json();
             }
 
+            // Formatação do objeto para envio da resposta em JSON
             let values = stream.measurements.map((data: ISensorData) => {
                 return {
                     timestamp: data.timestamp.getTime(),
@@ -48,10 +52,12 @@ export async function getDataStream (req: Request, res: Response) {
     })
 };
 
+// Cadastra uma Stream em um Sensor
 export async function storeDataStream (req: Request, res: Response) {
     let sensorId = req.params.id;
     let { label, unitId } = req.body;
 
+    // Verifica se o request é válido
     if (!label) {
         return res.status(400).json("Envie um label no próximo request");
     }
@@ -71,6 +77,7 @@ export async function storeDataStream (req: Request, res: Response) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
         } else {
+
             if (!sensor) {
                 return res.status(400).json(`Sensor de id ${sensorId} não encontrado`);
             }
@@ -84,6 +91,7 @@ export async function storeDataStream (req: Request, res: Response) {
                     sensor.streams.push(stream);
                     sensor.save();
 
+                    // Formatação do objeto para envio da resposta em JSON
                     let response = {
                         id: stream.streamId,
                         key: stream._id,

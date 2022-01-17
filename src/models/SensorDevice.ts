@@ -4,6 +4,8 @@ import { ISensorDevice } from './interfaces';
 
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
+// Model SensorDevice do diagrama de classes
+
 const SensorDeviceSchema = new Schema<ISensorDevice> ({
     sensorId: Number,
     label: {

@@ -4,6 +4,8 @@ import { ISensorData } from './interfaces';
 
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
+// Model SensorData do diagrama de classes
+
 const SensorDataSchema = new Schema<ISensorData> ({
     timestamp: {
         type: Date,

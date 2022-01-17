@@ -4,6 +4,8 @@ import { IDataStream } from './interfaces';
 
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
+// Model DataStream do diagrama de classes
+
 const DataStreamSchema = new Schema<IDataStream> ({
     label: {
         type: String,

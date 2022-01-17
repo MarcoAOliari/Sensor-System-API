@@ -6,9 +6,11 @@ import DataStream from '../models/DataStream';
 
 import { IDataStream, ISensorDevice, IUser } from '../models/interfaces';
 
+// Retorna todos os Sensores de um Usuário, com todas as Streams de cada um
 export async function getSensorsFromUser (req: Request, res: Response) {
     const { id } = req.params;
 
+    // Popula os Sensores de um usuário e as Streams de cada um
     await User.findById(id).populate({
         path: 'sensors',
         model: SensorDevice,
@@ -23,9 +25,10 @@ export async function getSensorsFromUser (req: Request, res: Response) {
         } else {
 
             if (!user) {
-                return res.status(400).json(`Usuário de id ${id} não encontrado`);
+                return res.status(204).json();
             }
 
+            // Formatação do objeto para envio da resposta em JSON
             let response = user.sensors.map((sensor: ISensorDevice) => {
                 let streamsData = sensor.streams.map((stream: IDataStream) => {
                     return {

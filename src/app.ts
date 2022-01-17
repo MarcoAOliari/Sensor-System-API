@@ -28,23 +28,25 @@ class Application {
     }
 
     middlewares() {
-        this.app.use(morgan('dev'));
+        // this.app.use(morgan('dev'));
+        // Configurações dos middlewares
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(express.json());
     }
 
     routes() {
+        // Rotas utilizadas pela API
         this.app.use(MeasurementUnitRoutes);
         this.app.use(UserRoutes);
         this.app.use(SensorDeviceRoutes);
         this.app.use(DataStreamRoutes);
         this.app.use(SensorDataRoutes);
-        this.app.use(PopulateRoutes);
+        //this.app.use(PopulateRoutes);
     }
 
     start() {
         this.app.listen(this.app.get('port'), () => {
-            console.log('Servidor na porta', this.app.get('port'));
+            console.log('Servidor online na porta', this.app.get('port'));
         });
     }
 

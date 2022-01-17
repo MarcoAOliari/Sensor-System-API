@@ -4,6 +4,8 @@ import { IMeasurementUnit } from './interfaces';
 
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
+// Model MeasurementUnit do diagrama de classes
+
 const MeasurementUnitSchema = new Schema<IMeasurementUnit> ({
     symbol: {
         type: String,

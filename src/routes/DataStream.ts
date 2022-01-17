@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getDataStream, storeDataStream } from '../controllers/DataStream.controller';
+
 const router = Router();
 
 router.get('/datastream/:id', getDataStream);

@@ -5,13 +5,15 @@ import DataStream from '../models/DataStream';
 
 import { IDataStream, ISensorData } from '../models/interfaces';
 
+// Cadastra uma nova medição em uma Stream
 export async function storeSensorData (req: Request, res: Response) {
     let streamId = req.params.id;
 
     let { timestamp, value } = req.body;
 
+    // Verifica se o request é válido
     if (!Number.isInteger(timestamp)) {
-        return res.status(400).json("Envie um timestamp no próximo request");
+        return res.status(400).json("Envie um timestamp válido no próximo request");
     }
 
     if (isNaN(value) || value === '') {
@@ -44,6 +46,7 @@ export async function storeSensorData (req: Request, res: Response) {
                     stream.measurementCount = stream.measurementCount + 1;
                     stream.save();
 
+                    // Formatação do objeto para envio da resposta em JSON
                     let response = {
                         id: data.dataId,
                         timestamp: data.timestamp.getTime(),

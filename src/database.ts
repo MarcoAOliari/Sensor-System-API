@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Conexão com o banco de dados
 export async function connect () {
     try {
         await mongoose.connect('mongodb://localhost/senseup', {

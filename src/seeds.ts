@@ -24,6 +24,8 @@ let MeasurementUnits = [
     }
 ]
 
+// Alimenta o banco de dados com as 5 principais unidades de medida
+// apresentadas na especificação
 export default function seedDB() {
     MeasurementUnit.deleteMany({}, function(err) {
         if (err) {

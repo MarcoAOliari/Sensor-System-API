@@ -7,9 +7,11 @@ import SensorData from '../models/SensorData';
 
 import { IDataStream, ISensorData, ISensorDevice, IUser } from '../models/interfaces';
 
+// Retorna um Sensor com suas Streams e as 5 últimas medições de cada
 export async function getSensorDevice (req: Request, res: Response) {
     const { id } = req.params;
 
+    // Popula as Streams do Sensor e as 5 últimas medições registradas de cada
     await SensorDevice.findOne({sensorId: id}).populate({
         path: 'streams',
         model: DataStream,
@@ -31,6 +33,7 @@ export async function getSensorDevice (req: Request, res: Response) {
                 return res.status(204).json();
             }
 
+            // Formatação do objeto para envio da resposta em JSON
             let streams = sensor.streams.map((stream: IDataStream) => {
                 let values = stream.measurements.map((data: ISensorData) => {
                     return {
@@ -63,11 +66,13 @@ export async function getSensorDevice (req: Request, res: Response) {
     });
 };
 
+// Cadastra um Sensor em um Usuário 
 export async function storeSensorDevice(req: Request, res: Response) {
     let userId = req.params.id;
 
     let { label, description } = req.body;
 
+    // Verifica se o request é válido
     if (!label) {
         return res.status(400).json("Envie um label no próximo request");
     }
@@ -100,6 +105,7 @@ export async function storeSensorDevice(req: Request, res: Response) {
                     user.sensors.push(sensor);
                     user.save();
 
+                    // Formatação do objeto para envio da resposta em JSON
                     let response = {
                         id: sensor.sensorId,
                         key: sensor._id,

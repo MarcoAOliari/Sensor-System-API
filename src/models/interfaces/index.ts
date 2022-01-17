@@ -1,7 +1,9 @@
 import mongoose, { Types } from 'mongoose';
 
+// Todas as interfaces dos Models utilizados
+
 export interface IUser extends mongoose.Document {
-    _id: Number;
+    _id: number;
     username: string;
     email: string;
     sensors: Types.DocumentArray<ISensorDevice>;
@@ -11,8 +13,8 @@ export interface IDataStream extends mongoose.Document {
     streamId: number;
     label: string;
     enabled: boolean;
-    deviceId: Number;
-    unitId: Number;
+    deviceId: number;
+    unitId: number;
     measurementCount: number;
     measurements: Types.DocumentArray<ISensorData>;
 }
@@ -27,7 +29,7 @@ export interface ISensorData extends mongoose.Document {
     dataId: number;
     timestamp: Date;
     value: DoubleRange;
-    unitId: Number;
+    unitId: number;
 }
 
 export interface ISensorDevice extends mongoose.Document {
