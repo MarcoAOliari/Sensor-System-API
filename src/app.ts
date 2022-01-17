@@ -1,4 +1,8 @@
 import express from 'express';
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: __dirname + '/.env' });
+
 import seedDB from './seeds';
 
 import MeasurementUnitRoutes from './routes/MeasurementUnit';
@@ -19,7 +23,7 @@ class Application {
     }
 
     settings() {
-        this.app.set('port', 3000);
+        this.app.set('port', process.env.DATABASE_PORT || 3000);
         // Adiciona as unidades de medida no banco de dados
         seedDB();
     }
