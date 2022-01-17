@@ -34,17 +34,18 @@ A API estará online em http://localhost:3000
 
 # Estrutura do Projeto
 | Nome | Descrição |
-| ----------------------- | ----------------------------------------------------------------------- |
-| **dist**                | Saída do build do Typescript |                                
-| **node_modules**        | Dependências utilizadas no desenvolvimento |
-| **src**                 | Código fonte que é compilado para as pasta dist |
-| **src/models**          | Schemas utilizados para armazenar e retornar dados do banco de dados |
-| **src/routes**          | Rotas geradas pelo express, divididas de acordo com cada funcionalidade |
-| **src/controllers**     | Funções que são executadas quando uma rota é acionada |
-| **src/seeds.ts**        | Alimentação do banco de dados com unidades de medida |
-| **src/app.ts**          | Configuração do app do express |
-| **src/index.ts**        | Inicialização do app do express |
-| **package.json**        | Dependências do npm e scripts |
+| ------------------------- | ----------------------------------------------------------------------- |
+| **dist**                  | Saída do build do Typescript |                                
+| **node_modules**          | Dependências utilizadas no desenvolvimento |
+| **src**                   | Código fonte que é compilado para as pasta dist |
+| **src/models**            | Schemas utilizados para armazenar e retornar dados do banco de dados |
+| **src/models/interfaces** | Interfaces utilizadas nos Schemas
+| **src/routes**            | Rotas geradas pelo express, divididas de acordo com cada funcionalidade |
+| **src/controllers**       | Funções que são executadas quando uma rota é acionada |
+| **src/seeds.ts**          | Alimentação do banco de dados com unidades de medida |
+| **src/app.ts**            | Configuração do app do express |
+| **src/index.ts**          | Inicialização do app do express |
+| **package.json**          | Dependências do npm e scripts |
 
 # Desenvolvimento
 A API foi projetada seguindo da maneira mais fiel possível às especificações fornecidas. Para a comunicação com o banco de dados MongoDB foi utilizado o ODM mongoose. A porta e o nome do banco de dados são variáveis de ambiente, configuradas com o dotenv e recebidas de um arquivo .env.
