@@ -4,6 +4,8 @@ import User from '../models/User';
 import SensorDevice from '../models/SensorDevice';
 import DataStream from '../models/DataStream';
 
+import { IDataStream, ISensorDevice, IUser } from '../models/interfaces';
+
 export async function getSensorsFromUser (req: Request, res: Response) {
     const { id } = req.params;
 
@@ -14,7 +16,7 @@ export async function getSensorsFromUser (req: Request, res: Response) {
             path: 'streams',
             model: DataStream
         }
-    }).exec(function (err: any, user: any) {
+    }).exec(function (err: any, user: IUser) {
         if (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
@@ -24,8 +26,8 @@ export async function getSensorsFromUser (req: Request, res: Response) {
                 return res.status(400).json(`Usuário de id ${id} não encontrado`);
             }
 
-            let response = user.sensors.map((sensor: any) => {
-                let streamsData = sensor.streams.map((stream: any) => {
+            let response = user.sensors.map((sensor: ISensorDevice) => {
+                let streamsData = sensor.streams.map((stream: IDataStream) => {
                     return {
                         id: stream.streamId,
                         key: stream._id,
